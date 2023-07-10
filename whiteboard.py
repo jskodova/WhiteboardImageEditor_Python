@@ -12,6 +12,30 @@ root.geometry("1200x700+150+50")
 root.config(bg="#f2f3f5")
 root.resizable(width=True, height=True)
 
+current_x = 1
+current_y = 1
+color = "black"
+
+def locate_xy(event):
+    global current_x, current_y
+    current_x = event.x
+    current_y = event.y
+
+def addline(event):
+    global current_x, current_y
+    canvas.create_line((current_x, current_y, event.x, event.y), fill=color, width=get_current_value(), capstyle=ROUND, smooth=True)
+    current_x, current_y = event.x, event.y
+
+def showcolor(newcolor):
+    global color
+    color = newcolor
+
+
+# Components
+
+# Icon
+image_icon = PhotoImage(file="img/logo.png")
+root.iconphoto(False, image_icon)
 
 # Sidemenu
 side_menu = PhotoImage(file="img/side_menu.png")
