@@ -53,6 +53,38 @@ def my_callback(event):
     global f_img
     my_img = canvas.create_image(event.x, event.y, image=f_img)
 
+def apply_filter(filter):
+    global filename
+
+    image = Image.open(filename)
+
+    if filter == "Black and White":
+        image = ImageOps.grayscale(image)
+    elif filter == "Blur":
+        image = image.filter(ImageFilter.BLUR)
+    elif filter == "Contour":
+        image = image.filter(ImageFilter.CONTOUR)
+    elif filter == "Detail":
+        image = image.filter(ImageFilter.DETAIL)
+    elif filter == "Edge Enhance":
+        image = image.filter(ImageFilter.EDGE_ENHANCE)
+    elif filter == "Edge Enhance More":
+        image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
+    elif filter == "Emboss":
+        image = image.filter(ImageFilter.EMBOSS)
+    elif filter == "Find Edges":
+        image = image.filter(ImageFilter.FIND_EDGES)
+    elif filter == "Sharpen":
+        image = image.filter(ImageFilter.SHARPEN)
+    elif filter == "Smooth":
+        image = image.filter(ImageFilter.SMOOTH)
+    elif filter == "Smooth More":
+        image = image.filter(ImageFilter.SMOOTH_MORE)
+
+    image = ImageTk.PhotoImage(image)
+    canvas.image = image
+    canvas.create_image(0, 0, image=image, anchor="nw")
+
 # Components
 
 # Icon
