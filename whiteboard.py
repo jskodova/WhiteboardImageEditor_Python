@@ -30,6 +30,28 @@ def showcolor(newcolor):
     global color
     color = newcolor
 
+def new_canvas():
+    canvas.delete("all")
+    display_palette()
+
+def insert_image():
+    global filename
+    global f_img
+
+    filename = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select image", filetypes=(("Png files", "*.png"), ("All files", "*.*")))
+    original_image = Image.open(filename)
+
+    resized_image = original_image.resize((int(original_image.width / 2), int(original_image.height / 2)), Image.ANTIALIAS)
+
+    f_img = ImageTk.PhotoImage(resized_image)
+
+    my_img = canvas.create_image(280, 100, image=f_img)
+    root.bind("<B3-Motion>", my_callback)
+
+
+def my_callback(event):
+    global f_img
+    my_img = canvas.create_image(event.x, event.y, image=f_img)
 
 # Components
 
@@ -85,6 +107,24 @@ def display_palette():
     colors.tag_bind(id, "<Button-1>", lambda x: showcolor("purple"))
 
 display_palette()
+
+# Size slider
+
+current_value = tk.DoubleVar()
+def get_current_value():
+    return "{:.2f}".format(current_value.get())
+
+def slider_change(event):
+    value_label.configure(text=get_current_value())
+
+size_label = tk.Label(root, text="Brush Size:")
+size_label.place(x=100, y=20)
+
+slider = ttk.Scale(root, from_=1, to=100, orient=tk.HORIZONTAL, variable=current_value, command=slider_change)
+slider.place(x=220, y=15)
+
+value_label = ttk.Label(root, text=get_current_value())
+value_label.place(x=180, y=20)
 
 
 # Main Window
