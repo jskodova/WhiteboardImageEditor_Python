@@ -126,6 +126,14 @@ slider.place(x=220, y=15)
 value_label = ttk.Label(root, text=get_current_value())
 value_label.place(x=180, y=20)
 
+# Image filter
+filter_label = tk.Label(root, text="Select filter:")
+filter_label.place(x=350, y=20)
+
+filter_combobox = ttk.Combobox(root, values=["None", "Blur", "Contour", "Detail", "Edge Enhance", "Edge Enhance More", "Emboss", "Find Edges", "Sharpen", "Smooth", "Smooth More"])
+filter_combobox.place(x=430, y=20)
+
+filter_combobox.bind("<<ComboboxSelected>>", lambda event: apply_filter(filter_combobox.get()))
 
 # Main Window
 canvas = Canvas(root, width=1070, height=620, bg="white", cursor="hand2")
